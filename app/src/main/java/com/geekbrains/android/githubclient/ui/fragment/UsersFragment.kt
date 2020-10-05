@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.geekbrains.android.githubclient.GithubApp
 import com.geekbrains.android.githubclient.R
 import com.geekbrains.android.githubclient.mvp.model.Repository.GithubUsersRepo
+import com.geekbrains.android.githubclient.mvp.model.entity.GithubUser
 import com.geekbrains.android.githubclient.mvp.presenter.UsersPresenter
 import com.geekbrains.android.githubclient.mvp.view.UsersView
 import com.geekbrains.android.githubclient.ui.BackButtonListener
@@ -51,8 +52,8 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
         adapter?.notifyDataSetChanged()
     }
 
-    override fun sendUserLogin(login: String) {
-        viewModel.getUserLoginLiveData().postValue(login)
+    override fun sendUser(user: GithubUser) {
+        viewModel.getUserLoginLiveData().postValue(user)
     }
 
     override fun backPressed() = presenter.backPressed()

@@ -1,5 +1,6 @@
 package com.geekbrains.android.githubclient.mvp.view
 
+import com.geekbrains.android.githubclient.mvp.model.entity.GithubUser
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
@@ -8,5 +9,5 @@ import moxy.viewstate.strategy.StateStrategyType
 interface UsersView : MvpView {
     fun init()
     fun updateList()
-    fun sendUserLogin(login: String)
+    fun sendUser(login: GithubUser)
 }

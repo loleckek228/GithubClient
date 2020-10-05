@@ -38,12 +38,12 @@ class UsersPresenter(val usersRepo: GithubUsersRepo, val router: Router) :
         usersListPresenter.itemClickListener = {
             router.navigateTo(Screens.UserScreen())
 
-            val userLogin = usersListPresenter.users[it.pos].login
-            viewState.sendUserLogin(userLogin)
+            val user = usersListPresenter.users[it.pos]
+            viewState.sendUser(user)
         }
     }
 
-    fun loadData() {
+    private fun loadData() {
         val users =
             usersRepo.getUsers()
         usersListPresenter.users.addAll(users)

@@ -32,8 +32,8 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackButtonListener {
         return View.inflate(context, R.layout.fragment_user, null)
     }
 
-    override fun showUserLogin(login: String) {
-        user_login_textView.text = login
+    override fun showUserInfo(info: String) {
+        user_login_textView.text = info
     }
 
     override fun backPressed(): Boolean = presenter.backPressed()
