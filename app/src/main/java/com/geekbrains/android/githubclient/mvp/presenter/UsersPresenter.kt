@@ -9,7 +9,7 @@ import com.geekbrains.android.githubclient.navigation.Screens
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 
-class UsersPresenter(val usersRepo: GithubUsersRepo, val router: Router) :
+class UsersPresenter(private val usersRepo: GithubUsersRepo, private val router: Router) :
     MvpPresenter<UsersView>() {
 
     class UsersListPresenter : IUserListPresenter {
@@ -44,9 +44,13 @@ class UsersPresenter(val usersRepo: GithubUsersRepo, val router: Router) :
     }
 
     private fun loadData() {
-        val users =
-            usersRepo.getUsers()
-        usersListPresenter.users.addAll(users)
+
+        usersRepo.getUsers().subscribe { t ->
+            val users = mutableListOf<GithubUser>()
+            users.add(t)
+
+            usersListPresenter.users.addAll(users)
+        }
 
         viewState.updateList()
     }

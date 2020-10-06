@@ -32,8 +32,8 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackButtonListener {
         return View.inflate(context, R.layout.fragment_user, null)
     }
 
-    override fun showUserInfo(info: String) {
-        user_login_textView.text = info
+    override fun showUserLogin(login: String) {
+        user_login_textView.text = login
     }
 
     override fun backPressed(): Boolean = presenter.backPressed()
@@ -43,7 +43,7 @@ class UserFragment : MvpAppCompatFragment(), UserView, BackButtonListener {
 
         viewModel = ViewModelProvider(activity!!).get(UserViewModel::class.java)
 
-        viewModel.getUserLoginLiveData().observe(this, {
+        viewModel.getUserLiveData().observe(this, {
             presenter.showUserInfo(it)
         })
     }

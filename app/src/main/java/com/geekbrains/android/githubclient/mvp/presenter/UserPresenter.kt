@@ -8,7 +8,9 @@ import ru.terrakok.cicerone.Router
 
 class UserPresenter(private val router: Router) : MvpPresenter<UserView>() {
     fun showUserInfo(user: GithubUser) {
-        viewState.showUserInfo(user.login)
+        val userLogin = user.login
+
+        viewState.showUserLogin(userLogin)
     }
 
     fun backPressed(): Boolean {

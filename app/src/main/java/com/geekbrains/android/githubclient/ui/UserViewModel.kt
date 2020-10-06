@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import com.geekbrains.android.githubclient.mvp.model.entity.GithubUser
 
 class UserViewModel : ViewModel() {
-    private val userLoginLiveData = MutableLiveData<GithubUser>()
+    private val userLiveData = MutableLiveData<GithubUser>()
 
-    fun getUserLoginLiveData(): MutableLiveData<GithubUser> {
-        return userLoginLiveData
+    fun getUserLiveData(): MutableLiveData<GithubUser> {
+        return userLiveData
     }
 }
