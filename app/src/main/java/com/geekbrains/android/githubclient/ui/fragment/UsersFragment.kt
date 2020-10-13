@@ -53,7 +53,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     }
 
     override fun sendUser(user: GithubUser) {
-        viewModel.getUserLoginLiveData().postValue(user)
+        viewModel.getUserLiveData().postValue(user)
     }
 
     override fun backPressed() = presenter.backPressed()

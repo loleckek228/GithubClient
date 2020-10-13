@@ -9,5 +9,5 @@ import moxy.viewstate.strategy.StateStrategyType
 interface UsersView : MvpView {
     fun init()
     fun updateList()
-    fun sendUser(login: GithubUser)
+    fun sendUser(user: GithubUser)
 }
