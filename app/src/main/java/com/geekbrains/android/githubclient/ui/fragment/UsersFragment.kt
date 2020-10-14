@@ -8,13 +8,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.geekbrains.android.githubclient.GithubApp
 import com.geekbrains.android.githubclient.R
-import com.geekbrains.android.githubclient.mvp.model.Repository.GithubUsersRepo
 import com.geekbrains.android.githubclient.mvp.model.entity.GithubUser
 import com.geekbrains.android.githubclient.mvp.presenter.UsersPresenter
 import com.geekbrains.android.githubclient.mvp.view.UsersView
 import com.geekbrains.android.githubclient.ui.BackButtonListener
-import com.geekbrains.android.githubclient.ui.UserViewModel
-import com.geekbrains.android.githubclient.ui.adapter.UsersRVAdapter
+import com.geekbrains.android.githubclient.ui.ViewModels.UserViewModel
+import com.geekbrains.android.githubclient.ui.adapters.UsersRVAdapter
 import kotlinx.android.synthetic.main.fragment_users.*
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -28,12 +27,11 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     val presenter: UsersPresenter by moxyPresenter {
         UsersPresenter(
-            GithubUsersRepo(),
             GithubApp.instance.router
         )
     }
 
-    var adapter: UsersRVAdapter? = null
+    private var mAdapter: UsersRVAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,23 +41,28 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
         View.inflate(context, R.layout.fragment_users, null)
 
     override fun init() {
-        rv_users.layoutManager = LinearLayoutManager(context)
-        adapter = UsersRVAdapter(presenter.usersListPresenter)
-        rv_users.adapter = adapter
+        mAdapter = UsersRVAdapter(presenter.usersListPresenter)
+
+        with(users_recycler_view) {
+            layoutManager = LinearLayoutManager(context)
+            adapter = mAdapter
+        }
     }
 
     override fun updateList() {
-        adapter?.notifyDataSetChanged()
+        mAdapter?.notifyDataSetChanged()
     }
 
     override fun sendUser(user: GithubUser) {
-        viewModel.getUserLiveData().postValue(user)
+        viewModel.getLiveData().postValue(user)
     }
 
     override fun backPressed() = presenter.backPressed()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(activity!!).get(UserViewModel::class.java)
+        viewModel =
+            ViewModelProvider(activity!!).get(UserViewModel::class.java)
+
     }
 }

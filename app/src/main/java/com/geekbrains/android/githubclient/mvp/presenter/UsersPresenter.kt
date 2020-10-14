@@ -1,15 +1,24 @@
 package com.geekbrains.android.githubclient.mvp.presenter
 
-import com.geekbrains.android.githubclient.mvp.model.Repository.GithubUsersRepo
+import com.geekbrains.android.githubclient.mvp.model.dataSource.DataSourceRemote
 import com.geekbrains.android.githubclient.mvp.model.entity.GithubUser
+import com.geekbrains.android.githubclient.mvp.model.repository.UsersRepo
 import com.geekbrains.android.githubclient.mvp.presenter.list.IUserListPresenter
-import com.geekbrains.android.githubclient.mvp.view.UserItemView
+import com.geekbrains.android.githubclient.mvp.view.itemsView.UserItemView
 import com.geekbrains.android.githubclient.mvp.view.UsersView
 import com.geekbrains.android.githubclient.navigation.Screens
+import com.geekbrains.android.githubclient.rx.SchedulerProvider
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
+import timber.log.Timber
 
-class UsersPresenter(private val usersRepo: GithubUsersRepo, private val router: Router) :
+class UsersPresenter(
+    private val router: Router,
+    private val repository: UsersRepo = UsersRepo(DataSourceRemote()),
+    private val schedulersProvider: SchedulerProvider = SchedulerProvider(),
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
+) :
     MvpPresenter<UsersView>() {
 
     class UsersListPresenter : IUserListPresenter {
@@ -22,7 +31,9 @@ class UsersPresenter(private val usersRepo: GithubUsersRepo, private val router:
 
         override fun bindView(view: UserItemView) {
             val user = users[view.pos]
+
             view.setLogin(user.login)
+            view.loadAvatar(user.avatar_url)
         }
     }
 
@@ -44,15 +55,20 @@ class UsersPresenter(private val usersRepo: GithubUsersRepo, private val router:
     }
 
     private fun loadData() {
+        compositeDisposable.add(
+            repository.getUsers()
+                .observeOn(schedulersProvider.ui())
+                .subscribe({ t ->
+                    val users = mutableListOf<GithubUser>()
+                    users.addAll(t)
 
-        usersRepo.getUsers().subscribe { t ->
-            val users = mutableListOf<GithubUser>()
-            users.add(t)
+                    usersListPresenter.users.addAll(users)
 
-            usersListPresenter.users.addAll(users)
-        }
-
-        viewState.updateList()
+                    viewState.updateList()
+                }, { e ->
+                    Timber.w(e.message)
+                })
+        )
     }
 
     fun backPressed(): Boolean {

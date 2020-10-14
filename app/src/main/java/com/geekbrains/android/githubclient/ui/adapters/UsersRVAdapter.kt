@@ -1,16 +1,22 @@
-package com.geekbrains.android.githubclient.ui.adapter
+package com.geekbrains.android.githubclient.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.android.githubclient.R
 import com.geekbrains.android.githubclient.mvp.presenter.list.IUserListPresenter
-import com.geekbrains.android.githubclient.mvp.view.UserItemView
+import com.geekbrains.android.githubclient.mvp.view.itemsView.UserItemView
+import com.geekbrains.android.githubclient.mvp.view.image.GlideImageLoader
+import com.geekbrains.android.githubclient.mvp.view.image.IImageLoader
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_user.view.*
 
-class UsersRVAdapter(val presenter: IUserListPresenter) :
+class UsersRVAdapter(
+    val presenter: IUserListPresenter,
+    private val imageLoader: IImageLoader<ImageView> = GlideImageLoader()
+) :
     RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -34,9 +40,15 @@ class UsersRVAdapter(val presenter: IUserListPresenter) :
         RecyclerView.ViewHolder(containerView), LayoutContainer, UserItemView {
         override var pos = -1
 
-        override fun setLogin(text: String) =
+        override fun setLogin(text: String?) =
             with(containerView) {
-                textView_login.text = text
+                login_text_view.text = text
             }
+
+        override fun loadAvatar(url: String?) {
+            with(containerView) {
+                imageLoader.loadImage(url, avatar_image_view)
+            }
+        }
     }
 }
