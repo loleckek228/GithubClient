@@ -1,13 +1,12 @@
 package com.geekbrains.android.githubclient.mvp.presenter
 
-import com.geekbrains.android.githubclient.mvp.model.dataSource.DataSourceRemote
-import com.geekbrains.android.githubclient.mvp.model.entity.GithubUser
-import com.geekbrains.android.githubclient.mvp.model.repository.UsersRepo
+import com.geekbrains.android.githubclient.mvp.model.entity.remote.GithubUser
+import com.geekbrains.android.githubclient.mvp.model.repository.irepo.IUsersRepo
 import com.geekbrains.android.githubclient.mvp.presenter.list.IUserListPresenter
-import com.geekbrains.android.githubclient.mvp.view.itemsView.UserItemView
 import com.geekbrains.android.githubclient.mvp.view.UsersView
+import com.geekbrains.android.githubclient.mvp.view.itemsView.UserItemView
 import com.geekbrains.android.githubclient.navigation.Screens
-import com.geekbrains.android.githubclient.rx.SchedulerProvider
+import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
@@ -15,8 +14,8 @@ import timber.log.Timber
 
 class UsersPresenter(
     private val router: Router,
-    private val repository: UsersRepo = UsersRepo(DataSourceRemote()),
-    private val schedulersProvider: SchedulerProvider = SchedulerProvider(),
+    private val scheduler: Scheduler,
+    private val usersRepo: IUsersRepo,
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 ) :
     MvpPresenter<UsersView>() {
@@ -56,9 +55,9 @@ class UsersPresenter(
 
     private fun loadData() {
         compositeDisposable.add(
-            repository.getUsers()
-                .observeOn(schedulersProvider.ui())
-                .subscribe({ t ->
+            usersRepo.getUsers()
+                ?.observeOn(scheduler)
+                ?.subscribe({ t ->
                     val users = mutableListOf<GithubUser>()
                     users.addAll(t)
 
@@ -66,7 +65,7 @@ class UsersPresenter(
 
                     viewState.updateList()
                 }, { e ->
-                    Timber.w(e.message)
+                    Timber.w(e)
                 })
         )
     }

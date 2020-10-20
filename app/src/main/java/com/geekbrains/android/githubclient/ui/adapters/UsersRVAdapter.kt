@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.item_user.view.*
 
 class UsersRVAdapter(
     val presenter: IUserListPresenter,
-    private val imageLoader: IImageLoader<ImageView> = GlideImageLoader()
+    private val imageLoader: IImageLoader<ImageView>
 ) :
     RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
 

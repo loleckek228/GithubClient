@@ -1,7 +1,6 @@
 package com.geekbrains.android.githubclient.navigation
 
 import androidx.fragment.app.Fragment
-import com.geekbrains.android.githubclient.mvp.model.entity.GithubUser
 import com.geekbrains.android.githubclient.ui.fragment.RepositoryFragment
 import com.geekbrains.android.githubclient.ui.fragment.UserFragment
 import com.geekbrains.android.githubclient.ui.fragment.UsersFragment

@@ -1,6 +1,6 @@
 package com.geekbrains.android.githubclient.mvp.presenter
 
-import com.geekbrains.android.githubclient.mvp.model.entity.GitHubUserRepository
+import com.geekbrains.android.githubclient.mvp.model.entity.remote.GitHubUserRepository
 import com.geekbrains.android.githubclient.mvp.view.RepositoryView
 import moxy.MvpPresenter
 
