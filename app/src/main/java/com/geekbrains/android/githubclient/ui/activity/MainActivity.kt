@@ -1,13 +1,11 @@
 package com.geekbrains.android.githubclient.ui.activity
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
 import com.geekbrains.android.githubclient.GithubApp
 import com.geekbrains.android.githubclient.R
 import com.geekbrains.android.githubclient.mvp.presenter.MainPresenter
 import com.geekbrains.android.githubclient.mvp.view.MainView
 import com.geekbrains.android.githubclient.ui.BackButtonListener
-import com.geekbrains.android.githubclient.ui.UserViewModel
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
@@ -18,14 +16,10 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     private val presenter: MainPresenter
             by moxyPresenter { MainPresenter(GithubApp.instance.router) }
 
-    private lateinit var sendUserViewModel: UserViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-
-        sendUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
     }
 
     override fun onResumeFragments() {

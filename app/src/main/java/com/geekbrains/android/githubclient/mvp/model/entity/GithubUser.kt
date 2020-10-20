@@ -1,7 +1,10 @@
 package com.geekbrains.android.githubclient.mvp.model.entity
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import com.google.gson.annotations.Expose
 
-@Parcelize
-data class GithubUser(val login: String) : Parcelable
+data class GithubUser(
+    @Expose val id: String?,
+    @Expose val login: String?,
+    @Expose val avatar_url: String?,
+    @Expose val repos_url: String?
+)

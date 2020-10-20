@@ -1,13 +1,13 @@
-package com.geekbrains.android.githubclient.ui
+package com.geekbrains.android.githubclient.ui.ViewModels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.geekbrains.android.githubclient.mvp.model.entity.GithubUser
 
 class UserViewModel : ViewModel() {
-    private val userLiveData = MutableLiveData<GithubUser>()
+    private val liveData = MutableLiveData<GithubUser>()
 
-    fun getUserLiveData(): MutableLiveData<GithubUser> {
-        return userLiveData
+    fun getLiveData(): MutableLiveData<GithubUser> {
+        return liveData
     }
 }
