@@ -2,7 +2,7 @@ package com.geekbrains.android.githubclient.ui.ViewModels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.geekbrains.android.githubclient.mvp.model.entity.GitHubUserRepository
+import com.geekbrains.android.githubclient.mvp.model.entity.remote.GitHubUserRepository
 
 class RepositoryViewModel : ViewModel() {
     private val liveData = MutableLiveData<GitHubUserRepository>()
