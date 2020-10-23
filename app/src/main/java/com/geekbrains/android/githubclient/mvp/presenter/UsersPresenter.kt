@@ -11,14 +11,20 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 import timber.log.Timber
+import javax.inject.Inject
 
 class UsersPresenter(
-    private val router: Router,
-    private val scheduler: Scheduler,
-    private val usersRepo: IUsersRepo,
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 ) :
     MvpPresenter<UsersView>() {
+    @Inject
+    lateinit var usersRepo: IUsersRepo
+
+    @Inject
+    lateinit var router: Router
+
+    @Inject
+    lateinit var scheduler: Scheduler
 
     class UsersListPresenter : IUserListPresenter {
         val users =

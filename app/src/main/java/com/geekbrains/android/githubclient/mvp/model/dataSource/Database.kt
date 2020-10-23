@@ -1,4 +1,4 @@
-package com.geekbrains.android.githubclient.mvp.model.dataSource.local
+package com.geekbrains.android.githubclient.mvp.model.dataSource
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -9,7 +9,6 @@ import com.geekbrains.android.githubclient.mvp.model.entity.local.RoomGithubUser
 import com.geekbrains.android.githubclient.mvp.model.entity.local.dao.ImageDao
 import com.geekbrains.android.githubclient.mvp.model.entity.local.dao.RepositoryDao
 import com.geekbrains.android.githubclient.mvp.model.entity.local.dao.UserDao
-import com.geekbrains.android.githubclient.mvp.view.`RepositoryView$$State`
 
 @androidx.room.Database(
     entities = arrayOf(
@@ -27,7 +26,7 @@ abstract class Database : RoomDatabase() {
     abstract fun imageDao(): ImageDao
 
     companion object {
-        private const val DB_NAME = "database.db"
+        const val DB_NAME = "database.db"
 
         @Volatile
         private var instance: Database? = null

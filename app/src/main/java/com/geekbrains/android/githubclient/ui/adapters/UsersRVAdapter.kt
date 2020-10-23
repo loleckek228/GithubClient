@@ -7,17 +7,19 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.android.githubclient.R
 import com.geekbrains.android.githubclient.mvp.presenter.list.IUserListPresenter
-import com.geekbrains.android.githubclient.mvp.view.itemsView.UserItemView
-import com.geekbrains.android.githubclient.mvp.view.image.GlideImageLoader
 import com.geekbrains.android.githubclient.mvp.view.image.IImageLoader
+import com.geekbrains.android.githubclient.mvp.view.itemsView.UserItemView
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_user.view.*
+import javax.inject.Inject
 
 class UsersRVAdapter(
     val presenter: IUserListPresenter,
-    private val imageLoader: IImageLoader<ImageView>
 ) :
     RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
+
+    @Inject
+    lateinit var imageLoader: IImageLoader<ImageView>
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

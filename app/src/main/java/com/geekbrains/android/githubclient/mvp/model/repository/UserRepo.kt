@@ -1,7 +1,7 @@
 package com.geekbrains.android.githubclient.mvp.model.repository
 
+import com.geekbrains.android.githubclient.mvp.model.api.IDataSource
 import com.geekbrains.android.githubclient.mvp.model.cache.icache.IRoomGithubRepositoriesCache
-import com.geekbrains.android.githubclient.mvp.model.dataSource.IDataSource
 import com.geekbrains.android.githubclient.mvp.model.entity.remote.GitHubUserRepository
 import com.geekbrains.android.githubclient.mvp.model.network.INetworkStatus
 import com.geekbrains.android.githubclient.mvp.model.repository.irepo.IUserRepo
@@ -19,7 +19,7 @@ class UserRepo(
     ): Single<List<GitHubUserRepository>> {
         return networkStatus.isOnlineSingle().flatMap { isOnline ->
             if (isOnline) {
-                api.getUserRepositories(url)
+                api.getUserRepository(url)
                     .flatMap { repositories ->
                         repositoriesCache.insertRepositories(repositories, userlogin)
                             .toSingleDefault(repositories)

@@ -1,7 +1,7 @@
 package com.geekbrains.android.githubclient.mvp.model.repository
 
+import com.geekbrains.android.githubclient.mvp.model.api.IDataSource
 import com.geekbrains.android.githubclient.mvp.model.cache.icache.IRoomGithubUsersCache
-import com.geekbrains.android.githubclient.mvp.model.dataSource.IDataSource
 import com.geekbrains.android.githubclient.mvp.model.entity.remote.GithubUser
 import com.geekbrains.android.githubclient.mvp.model.network.INetworkStatus
 import com.geekbrains.android.githubclient.mvp.model.repository.irepo.IUsersRepo

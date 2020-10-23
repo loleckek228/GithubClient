@@ -5,7 +5,6 @@ import com.geekbrains.android.githubclient.mvp.view.RepositoryView
 import moxy.MvpPresenter
 
 class RepositoryPresenter : MvpPresenter<RepositoryView>() {
-
     fun showRepositoryInfo(repository: GitHubUserRepository?) {
         val name = repository?.name
         val isPrivate = repository?.private

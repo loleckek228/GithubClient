@@ -1,9 +1,9 @@
 package com.geekbrains.android.githubclient
 
 import android.app.Application
-import android.content.Context
-import ru.terrakok.cicerone.Cicerone
-import ru.terrakok.cicerone.Router
+import com.geekbrains.android.githubclient.di.AppComponent
+import com.geekbrains.android.githubclient.di.DaggerAppComponent
+import com.geekbrains.android.githubclient.di.module.AppModule
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
@@ -12,9 +12,7 @@ class GithubApp : Application() {
         lateinit var instance: GithubApp
     }
 
-    private val cicerone: Cicerone<Router> by lazy {
-        Cicerone.create()
-    }
+    lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
@@ -22,11 +20,9 @@ class GithubApp : Application() {
         instance = this
 
         Timber.plant(DebugTree())
+
+        appComponent = DaggerAppComponent.builder()
+            .appModule(AppModule(this))
+            .build()
     }
-
-    val navigatorHolder
-        get() = cicerone.navigatorHolder
-
-    val router
-        get() = cicerone.router
 }
