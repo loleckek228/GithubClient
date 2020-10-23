@@ -3,7 +3,7 @@ package com.geekbrains.android.githubclient.mvp.model.cache
 import android.graphics.Bitmap
 import com.geekbrains.android.githubclient.GithubApp
 import com.geekbrains.android.githubclient.mvp.model.cache.icache.IRoomGithubImageCache
-import com.geekbrains.android.githubclient.mvp.model.dataSource.local.Database
+import com.geekbrains.android.githubclient.mvp.model.dataSource.Database
 import com.geekbrains.android.githubclient.mvp.model.entity.local.RoomGithubImage
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.schedulers.Schedulers

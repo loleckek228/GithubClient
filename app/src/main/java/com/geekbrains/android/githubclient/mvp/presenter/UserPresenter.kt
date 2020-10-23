@@ -3,7 +3,6 @@ package com.geekbrains.android.githubclient.mvp.presenter
 import com.geekbrains.android.githubclient.mvp.model.entity.remote.GitHubUserRepository
 import com.geekbrains.android.githubclient.mvp.model.entity.remote.GithubUser
 import com.geekbrains.android.githubclient.mvp.model.repository.irepo.IUserRepo
-import com.geekbrains.android.githubclient.mvp.model.repository.irepo.IUsersRepo
 import com.geekbrains.android.githubclient.mvp.presenter.list.IRepositoryListPresenter
 import com.geekbrains.android.githubclient.mvp.view.UserView
 import com.geekbrains.android.githubclient.mvp.view.itemsView.RepositoryItemView
@@ -12,13 +11,20 @@ import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
+import javax.inject.Inject
 
 class UserPresenter(
-    private val router: Router,
-    private val scheduler: Scheduler,
-    private val usersRepo: IUserRepo,
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 ) : MvpPresenter<UserView>() {
+
+    @Inject
+    lateinit var router: Router
+
+    @Inject
+    lateinit var scheduler: Scheduler
+
+    @Inject
+    lateinit var userRepo: IUserRepo
 
     class RepositoryListPresenter : IRepositoryListPresenter {
         val repositories =
@@ -52,7 +58,7 @@ class UserPresenter(
 
     private fun loadData(user: GithubUser) {
         compositeDisposable.add(
-            usersRepo.getUserRepository(user.repos_url, user.login)
+            userRepo.getUserRepository(user.repos_url, user.login)
                 .observeOn(scheduler)
                 .subscribe { t ->
                     val repositories = mutableListOf<GitHubUserRepository>()

@@ -4,5 +4,5 @@ import com.geekbrains.android.githubclient.mvp.model.entity.remote.GitHubUserRep
 import io.reactivex.rxjava3.core.Single
 
 interface IUserRepo {
-    fun getUserRepository(url: String?, login: String?): Single<List<GitHubUserRepository>>
+    fun getUserRepository(url: String?, userLogin: String?): Single<List<GitHubUserRepository>>
 }

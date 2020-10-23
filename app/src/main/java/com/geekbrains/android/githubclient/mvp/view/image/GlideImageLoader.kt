@@ -8,15 +8,16 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.geekbrains.android.githubclient.mvp.model.cache.icache.IRoomGithubImageCache
+import com.geekbrains.android.githubclient.mvp.model.network.INetworkStatus
 import com.geekbrains.android.githubclient.ui.network.AndroidNetworkStatus
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import timber.log.Timber
+import javax.inject.Inject
 
 class GlideImageLoader(
     private val imageCache: IRoomGithubImageCache,
-    private val networkStatus: AndroidNetworkStatus
+    private val networkStatus: INetworkStatus
 ) : IImageLoader<ImageView> {
-
     override fun loadImage(url: String?, container: ImageView) {
         networkStatus.isOnline().subscribe {
             if (it) {
