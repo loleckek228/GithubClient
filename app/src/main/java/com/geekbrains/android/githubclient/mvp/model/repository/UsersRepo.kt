@@ -18,19 +18,10 @@ class UsersRepo(
             if (isOnline) {
                 api.getUsers()
                     .flatMap { users ->
-                        //кэширование
-//                        Single.fromCallable {
-//                            val roomUsers = mapRoomGitHubUsers(users)
-//                            dataBase.userDao().insert(roomUsers)
-                        usersCache.insertUsers(users)
-//                            users
-//                        }
+                        usersCache.insertUsers(users).toSingleDefault(users)
                     }
             } else {
-//                Single.fromCallable {
-//                    mapGitHubUsers(dataBase.userDao().getUsers())
                 usersCache.getUsers()
-//                }
             }
         }.subscribeOn(Schedulers.io())
     }

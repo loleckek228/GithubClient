@@ -11,5 +11,5 @@ interface IRoomGithubRepositoriesCache {
     fun insertRepositories(
         repositories: List<GitHubUserRepository>,
         userLogin: String?
-    ): Single<List<GitHubUserRepository>>
+    ): Completable
 }

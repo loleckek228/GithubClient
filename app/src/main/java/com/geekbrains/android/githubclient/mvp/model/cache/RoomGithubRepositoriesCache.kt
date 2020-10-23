@@ -13,17 +13,16 @@ class RoomGithubRepositoriesCache(private val dataBase: Database) : IRoomGithubR
     override fun getRepositories(userLogin: String?): Single<List<GitHubUserRepository>> {
         return Single.fromCallable {
             mapGitHubRepositories(dataBase.repositoryDao().findByUserLogin(userLogin!!))
-        }/*.subscribeOn(Schedulers.io())*/
+        }
     }
 
     override fun insertRepositories(
         repositories: List<GitHubUserRepository>,
         userLogin: String?
-    ): Single<List<GitHubUserRepository>> {
-        return Single.fromCallable {
+    ): Completable {
+        return Completable.fromAction {
             val roomRepositories = mapRoomGitHubRepositories(repositories, userLogin)
             dataBase.repositoryDao().insert(roomRepositories)
-            repositories
         }
     }
 }

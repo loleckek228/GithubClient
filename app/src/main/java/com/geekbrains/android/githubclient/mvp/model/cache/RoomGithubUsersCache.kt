@@ -13,11 +13,11 @@ class RoomGithubUsersCache(private val dataBase: Database) : IRoomGithubUsersCac
     override fun getUsers(): Single<List<GithubUser>> {
         return Single.fromCallable {
             mapGitHubUsers(dataBase.userDao().getUsers())
-        }/*.subscribeOn(Schedulers.io())*/
+        }
     }
 
-    override fun insertUsers(users: List<GithubUser>): Single<List<GithubUser>> {
-        return Single.fromCallable {
+    override fun insertUsers(users: List<GithubUser>): Completable {
+        return Completable.fromAction() {
             val roomUsers = mapRoomGitHubUsers(users)
             dataBase.userDao().insert(roomUsers)
             users

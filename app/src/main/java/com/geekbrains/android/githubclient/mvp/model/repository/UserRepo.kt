@@ -21,19 +21,11 @@ class UserRepo(
             if (isOnline) {
                 api.getUserRepositories(url)
                     .flatMap { repositories ->
-//                        Single.fromCallable {
-                        //кэширование
-//                            val roomRepositories = mapRoomGitHubRepositories(repositories, login)
-//                            dataBase.repositoryDao().insert(roomRepositories)
                         repositoriesCache.insertRepositories(repositories, userlogin)
-//                            repositories
-//                        }
+                            .toSingleDefault(repositories)
                     }
             } else {
-//                Single.fromCallable {
-//                    mapGitHubRepositories(dataBase.repositoryDao().findByUserLogin(login!!))
                 repositoriesCache.getRepositories(userlogin)
-//                }
             }
         }.subscribeOn(Schedulers.io())
     }
